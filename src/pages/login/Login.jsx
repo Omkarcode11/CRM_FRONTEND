@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import usePostApi from "../../hooks/usePostApi";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [userId, setUserId] = useState("");
@@ -9,6 +10,7 @@ function Login() {
   const [userType, setUserType] = useState("");
   const [showSignUp, setShowSignUp] = useState(true);
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const loginFn = async (e) => {
     e.preventDefault();
@@ -20,8 +22,16 @@ function Login() {
       userType: userType,
     };
     let data = await usePostApi("/crm/api/v1/auth/signin", body);
-    setMessage("Success");
-    console.log("Data is " + JSON.stringify(data));
+    if (data.accessToken) {
+      localStorage.setItem("CrmToken", data.accessToken);
+      localStorage.setItem("CrmUserName", data.name);
+      localStorage.setItem("CrmUserType", data.userTypes);
+      setMessage("Success");
+      console.log("Data is " + JSON.stringify(data));
+      navigate(`/${data.userTypes}`);
+    } else {
+      setMessage("login fail");
+    }
   };
 
   const signupFn = async (e) => {
@@ -32,13 +42,19 @@ function Login() {
       email: userEmail,
       userType: userType,
       password: password,
-      userStatus: "APPROVED",
+      // userStatus: "APPROVED",
     };
     let data = await usePostApi("/crm/api/v1/auth/signup", body);
     setMessage("Success");
     setShowSignUp(false);
     console.log("Data is " + JSON.stringify(data));
   };
+
+  useEffect(() => {
+    let token = localStorage.getItem("CrmToken");
+    if (token) {
+    }
+  }, []);
 
   return (
     <div>
@@ -103,13 +119,19 @@ function Login() {
                         defaultValue={"CUSTOMER"}
                         onChange={(e) => setUserType(e.target.value)}
                       >
-                        {["CUSTOMER", "ENGINEER", "ADMIN"].map((option) =>
+                        {["CUSTOMER", "ENGINEER", "ADMIN"].map((option, i) =>
                           option == "CUSTOMER" ? (
-                            <option selected value={option}>
+                            <option
+                              key={i}
+                              defaultValue={"CUSTOMER"}
+                              value={option}
+                            >
                               {option}
                             </option>
                           ) : (
-                            <option value={option}>{option}</option>
+                            <option key={i} value={option}>
+                              {option}
+                            </option>
                           )
                         )}
                       </select>

@@ -1,5 +1,6 @@
 import axios from 'axios'
-import URL from '../constant/URL'
+import { URL } from '../constant/URL'
+
 
 
 async function usePostApi(path, body) {
