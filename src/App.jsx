@@ -18,7 +18,7 @@ function App() {
         <Route path="/customer" element={<Customer />} />
         <Route path="/engineer" element={<Engineer />} />
         <Route path="/error" element={<Error/>} />
-        <Route path="/tables" element={<DataTable/>} />
+        <Route path="*" element={<DataTable/>} />
       </Routes>
     </BrowserRouter>
   );
