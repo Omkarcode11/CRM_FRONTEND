@@ -5,9 +5,14 @@ import { URL } from '../constant/URL'
 
 async function usePostApi(path, body) {
     debugger
-    let { data } = await axios.post(URL + path, body)
-    console.log(data)
-    return data
+    try {
+
+        let { data } = await axios.post(URL + path, body)
+        console.log(data)
+        return data
+    } catch (err) {
+        return err
+    }
 }
 
 export default usePostApi

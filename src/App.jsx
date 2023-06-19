@@ -5,6 +5,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Admin from "./pages/admin/Admin";
 import Customer from "./pages/customer/Customer";
 import Engineer from "./pages/engineer/Engineer";
+import Error from "./pages/error/Error";
+import EnhancedTable from "./components/table/DataTable";
+import DataTable from "./components/table/DataTable";
 
 function App() {
   return (
@@ -14,6 +17,8 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/customer" element={<Customer />} />
         <Route path="/engineer" element={<Engineer />} />
+        <Route path="/error" element={<Error/>} />
+        <Route path="/table" element={<DataTable/>} />
       </Routes>
     </BrowserRouter>
   );

@@ -6,7 +6,7 @@ function Engineer() {
     name: "",
     userType: "",
   });
-  
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,7 +30,7 @@ function Engineer() {
 
   return (
     <h1>
-      Welcome {user?.name} as a {user.userType}
+      Welcome {user?.name} as a {user?.userType}
     </h1>
   );
 }

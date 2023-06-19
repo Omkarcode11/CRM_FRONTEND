@@ -27,9 +27,11 @@ function Login() {
       localStorage.setItem("CrmUserName", data.name);
       localStorage.setItem("CrmUserType", data.userTypes);
       setMessage("Success");
-      console.log("Data is " + JSON.stringify(data));
+      // console.log("Data is " + JSON.stringify(data));
       navigate(`/${data.userTypes}`);
     } else {
+      localStorage.setItem("Error", data.response.status);
+      navigate(`/error`);
       setMessage("login fail");
     }
   };
