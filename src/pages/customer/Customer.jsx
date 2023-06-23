@@ -25,7 +25,7 @@ function Customer() {
     { title: "STATUS", field: "status" },
   ];
 
-  async function getTic() {
+ const getTic = async()=> {
     try {
       let tickets = await getTickets();
       setData(tickets);
@@ -53,10 +53,9 @@ function Customer() {
     }
   }, []);
 
-  const addTicket = async () => {
-    debugger;
-    getTic()
-  };
+  // const addTicket = async () => {
+  //   getTic()
+  // };
 
   return (
     <div className="bg-light vh-100 p-5">
@@ -77,7 +76,7 @@ function Customer() {
       <h3 className="text-center text-danger">{errorMsg}</h3>
       <h4 className="text-center">Facing any issues? Raise a ticket!</h4>
       <button className="btn btn-lg btn-success float-end mx-3">
-        <CreateTicket addTicket={addTicket} />
+        <CreateTicket addTicket={getTic} />
       </button>
     </div>
   );
