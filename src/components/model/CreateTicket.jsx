@@ -17,11 +17,13 @@ export default function CreateTicket({addTicket}) {
       description,
       ticketPriority: priority,
     };
-    let { data } = await createTicketApi(body);
+    let data= await createTicketApi(body);
+
     addTicket()
     setPriority(1);
     setTitle("");
     setDescription("");
+    handleClose()
   }
 
   return (
