@@ -83,7 +83,7 @@ function Customer() {
           data={data}
           actions={[
             {
-              icon: "E",
+              icon: ()=><img width={'20px'} className="text-center" src="/edit.png"/>,
               tooltip: "Edit Ticket",
               onClick: (e, rowData) => {
                 print(rowData);
