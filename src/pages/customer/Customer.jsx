@@ -3,11 +3,17 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getTickets } from "../../api/getTickets";
 import CreateTicket from "../../components/model/CreateTicket";
+import UpdateTickets from "../../components/model/UpdateTickets";
 
 function Customer() {
+  let [oldTitle, setOldTitle] = useState("");
+  let [oldDescription, setOldDescription] = useState("");
+  let [oldPriority, setOldPriority] = useState("");
+  let [ticketId , setTicketId] = useState('')
+
+  let [show, setShow] = useState(false);
   let [user, setUser] = useState({ name: "", userType: "" });
   let [data, setData] = useState([]);
-  let [showModel, setShowModel] = useState(false);
   let [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
   const columns = [
@@ -25,14 +31,14 @@ function Customer() {
     { title: "STATUS", field: "status" },
   ];
 
- const getTic = async()=> {
+  const getTic = async () => {
     try {
       let tickets = await getTickets();
       setData(tickets);
     } catch (err) {
       setErrorMsg(err.message);
     }
-  }
+  };
 
   useEffect(() => {
     let token = localStorage.getItem("CrmToken");
@@ -53,9 +59,14 @@ function Customer() {
     }
   }, []);
 
-  // const addTicket = async () => {
-  //   getTic()
-  // };
+  function print(data) {
+    setOldDescription(data.description)
+    setOldTitle(data.title)
+    setOldPriority(data.ticketPriority)
+    setTicketId(data._id)
+    setShow(true);
+    console.log(show, data);
+  }
 
   return (
     <div className="bg-light vh-100 p-5">
@@ -70,6 +81,15 @@ function Customer() {
           title="Tickets raised by you"
           columns={columns}
           data={data}
+          actions={[
+            {
+              icon: "E",
+              tooltip: "Edit Ticket",
+              onClick: (e, rowData) => {
+                print(rowData);
+              },
+            },
+          ]}
         />
       </div>
       <hr />
@@ -77,6 +97,15 @@ function Customer() {
       <h4 className="text-center">Facing any issues? Raise a ticket!</h4>
       <button className="btn btn-lg btn-success float-end mx-3">
         <CreateTicket addTicket={getTic} />
+        <UpdateTickets
+          show={show}
+          setShow={setShow}
+          oldDescription={oldDescription}
+          oldPriority={oldPriority}
+          oldTitle={oldTitle}
+          TicketId={ticketId}
+          addTicket={getTic}
+        />
       </button>
     </div>
   );
