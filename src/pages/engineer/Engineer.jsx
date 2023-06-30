@@ -45,16 +45,17 @@ function Engineer() {
     let count = {
       OPEN: 0,
       CLOSE: 0,
-      IGNORE: 0,
+      INPROGRESS: 0,
       BLOCK: 0,
     };
+    debugger
 
     for (let i = 0; i < data.length; i++) {
       count[data[i].status]++;
     }
-    setTicketStatusCount((prev) => ({ prev, ...count }));
-    console.log(ticketStatusCount);
+    setTicketStatusCount((prev) => ({  ...count }));
   };
+  console.log(ticketStatusCount);
 
   const getTic = async () => {
     try {
@@ -102,7 +103,7 @@ function Engineer() {
       <div className="text-success">
         <h1 className="text-center">Welcome {user?.name}</h1>
         <p className="text-center text-muted h4">
-          Take a look at all you tickets below !
+          Take a look at all you tickets below Which you have assignee!
         </p>
       </div>
       <div className="d-flex flex-wrap justify-content-evenly">
@@ -119,8 +120,8 @@ function Engineer() {
         />
         <Card
           color={"secondary"}
-          data={ticketStatusCount.IGNORE}
-          heading={"IGNORE"}
+          data={ticketStatusCount.INPROGRESS}
+          heading={"INPROGRESS"}
           text={"light"}
         />
         <Card
@@ -151,7 +152,7 @@ function Engineer() {
       <hr />
       <h3 className="text-center text-danger">{errorMsg}</h3>
       <h4 className="text-center">Facing any issues? Raise a ticket!</h4>
-      <button className="btn btn-lg btn-success float-end mx-3">
+  
         <UpdateTickets
           show={show}
           setShow={setShow}
@@ -161,7 +162,7 @@ function Engineer() {
           TicketId={ticketId}
           addTicket={getTic}
         />
-      </button>
+      
     </div>
   );
 }

@@ -9,7 +9,6 @@ import "./Customer.css";
 import LogoutConformationBox from "../../components/comformation/LogoutConformationBox";
 
 function Customer() {
-  let [showLogout,setShowLogout] = useState(false)
   let [oldTitle, setOldTitle] = useState("");
   let [oldDescription, setOldDescription] = useState("");
   let [oldPriority, setOldPriority] = useState("");
@@ -17,7 +16,7 @@ function Customer() {
   let [ticketStatusCount, setTicketStatusCount] = useState({
     OPEN: 0,
     CLOSE: 0,
-    IGNORE: 0,
+    INPROGRESS: 0,
     BLOCK: 0,
   });
 
@@ -35,7 +34,7 @@ function Customer() {
       title: "TITLE",
       field: "title",
     },
-    { title: "DESCRPITION", field: "description" },
+    { title: "DESCRIPTION", field: "description" },
     { title: "ASSIGNEE", field: "assignee" },
     { title: "PRIORITY", field: "ticketPriority" },
     { title: "STATUS", field: "status" },
@@ -46,7 +45,7 @@ function Customer() {
     let count = {
       OPEN: 0,
       CLOSE: 0,
-      IGNORE: 0,
+      INPROGRESS: 0,
       BLOCK: 0,
     };
 
@@ -54,7 +53,6 @@ function Customer() {
       count[data[i].status]++;
     }
     setTicketStatusCount((prev) => ({ prev, ...count }));
-    console.log(ticketStatusCount);
   };
 
   const getTic = async () => {
@@ -96,10 +94,8 @@ function Customer() {
 
   return (
     <div className="bg-light vh-100 p-5">
-     
-      
       <div className="btn btn-danger logout">
-      <LogoutConformationBox/>
+        <LogoutConformationBox />
       </div>
 
       <div className="text-success">
@@ -114,7 +110,7 @@ function Customer() {
           data={ticketStatusCount.OPEN}
           heading={"OPEN"}
           text={"light"}
-          />
+        />
         <Card
           color={"success"}
           data={ticketStatusCount.CLOSE}
@@ -123,7 +119,7 @@ function Customer() {
         />
         <Card
           color={"secondary"}
-          data={ticketStatusCount.IGNORE}
+          data={ticketStatusCount.INPROGRESS}
           heading={"INPROGRESS"}
           text={"light"}
         />
