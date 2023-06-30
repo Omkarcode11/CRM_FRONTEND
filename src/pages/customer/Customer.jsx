@@ -39,6 +39,7 @@ function Customer() {
     { title: "ASSIGNEE", field: "assignee" },
     { title: "PRIORITY", field: "ticketPriority" },
     { title: "STATUS", field: "status" },
+    { title: "COMMENT", field: "comment" },
   ];
 
   const countingStatus = (data) => {

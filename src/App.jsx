@@ -18,7 +18,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/customer" element={<Customer />} />
-        <Route path="/engineer" element={<Engineer />} />
+        <Route path="/ENGINEER" element={<Engineer />} />
         <Route path="/error" element={<Error />} />
         <Route path="/model" element={<CreateTicket />} />
      
