@@ -110,13 +110,13 @@ function Customer() {
       </div>
       <div className="d-flex flex-wrap justify-content-evenly">
         <Card
-          color={"success"}
+          color={"primary"}
           data={ticketStatusCount.OPEN}
           heading={"OPEN"}
           text={"light"}
         />
         <Card
-          color={"muted"}
+          color={"success"}
           data={ticketStatusCount.CLOSE}
           heading={"CLOSE"}
         />
