@@ -56,7 +56,7 @@ export default function UpdateTickets({
           <Modal.Title>Update Ticket</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {localStorage.getItem("CrmUserType") === "CUSTOMER" || 'ADMIN' && (
+          {localStorage.getItem("CrmUserType") === "CUSTOMER"  && (
             <form>
               <div className="d-flex justify-content-between ">
                 <label className="h4 pe-2 text-muted ">Title</label>
@@ -96,7 +96,7 @@ export default function UpdateTickets({
               </div>
             </form>
           )}
-          {localStorage.getItem("CrmUserType") === "ENGINEER" || "ADMIN" && (
+          {localStorage.getItem("CrmUserType") === "ENGINEER" && (
             <form>
               <div className="d-flex justify-content-between ">
                 <label className="h4 pe-2 text-muted">Comment</label>
