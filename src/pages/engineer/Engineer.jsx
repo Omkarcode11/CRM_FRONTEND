@@ -9,7 +9,7 @@ import Card from "../../components/card/Card";
 import LogoutConformationBox from "../../components/comformation/LogoutConformationBox";
 
 function Engineer() {
-  let [showLogout,setShowLogout] = useState(false)
+  let [showLogout, setShowLogout] = useState(false);
   let [oldTitle, setOldTitle] = useState("");
   let [oldDescription, setOldDescription] = useState("");
   let [oldPriority, setOldPriority] = useState("");
@@ -95,10 +95,8 @@ function Engineer() {
 
   return (
     <div className="bg-light vh-100 p-5">
-     
-      
       <div className="btn btn-danger logout">
-      <LogoutConformationBox/>
+        <LogoutConformationBox />
       </div>
 
       <div className="text-success">
@@ -154,7 +152,6 @@ function Engineer() {
       <h3 className="text-center text-danger">{errorMsg}</h3>
       <h4 className="text-center">Facing any issues? Raise a ticket!</h4>
       <button className="btn btn-lg btn-success float-end mx-3">
-        <CreateTicket addTicket={getTic} />
         <UpdateTickets
           show={show}
           setShow={setShow}

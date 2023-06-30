@@ -27,11 +27,11 @@ export default function UpdateTickets({
         description,
         ticketPriority: priority,
       };
-    }else if(localStorage.getItem('CrmUserType')=='ENGINEER'){
+    } else if (localStorage.getItem("CrmUserType") == "ENGINEER") {
       body = {
         status,
         comment,
-      }
+      };
     }
 
     let data = await updateTicketApi(body, TicketId);
@@ -56,7 +56,7 @@ export default function UpdateTickets({
           <Modal.Title>Update Ticket</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {localStorage.getItem("CrmUserType") === "CUSTOMER"  && (
+          {localStorage.getItem("CrmUserType") === "CUSTOMER" && (
             <form>
               <div className="d-flex justify-content-between ">
                 <label className="h4 pe-2 text-muted ">Title</label>
