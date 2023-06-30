@@ -108,22 +108,23 @@ function Customer() {
           Take a look at all you tickets below !
         </p>
       </div>
-      <div className="d-flex flex-wrap justify-content-evenly">
+      <div className="d-flex my-2 flex-wrap justify-content-evenly">
         <Card
           color={"primary"}
           data={ticketStatusCount.OPEN}
           heading={"OPEN"}
           text={"light"}
-        />
+          />
         <Card
           color={"success"}
           data={ticketStatusCount.CLOSE}
           heading={"CLOSE"}
+          text={"light"}
         />
         <Card
           color={"secondary"}
           data={ticketStatusCount.IGNORE}
-          heading={"IGNORE"}
+          heading={"INPROGRESS"}
           text={"light"}
         />
         <Card

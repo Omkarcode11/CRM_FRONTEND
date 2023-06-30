@@ -119,7 +119,7 @@ export default function UpdateTickets({
                 >
                   <option value={"OPEN"}>OPEN</option>
                   <option value={"CLOSE"}>CLOSED</option>
-                  <option value={"IGNORE"}>IGNORE</option>
+                  <option value={"INPROGRESS"}>INPROGRESS</option>
                   <option value={"BLOCKED"}>BLOCK</option>
                 </select>
               </div>
