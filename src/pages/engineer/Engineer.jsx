@@ -7,11 +7,13 @@ import UpdateTickets from "../../components/model/UpdateTickets";
 import Card from "../../components/card/Card";
 // import "./Customer.css";
 import LogoutConformationBox from "../../components/comformation/LogoutConformationBox";
+import SendEmail from "../../components/model/SendEmail";
 
 function Engineer() {
-  let [showLogout, setShowLogout] = useState(false);
   let [oldTitle, setOldTitle] = useState("");
+  let [showEmail, setShowEmail] = useState(false);
   let [oldDescription, setOldDescription] = useState("");
+  let [userId, setUserId] = useState("");
   let [oldPriority, setOldPriority] = useState("");
   let [ticketId, setTicketId] = useState("");
   let [ticketStatusCount, setTicketStatusCount] = useState({
@@ -48,14 +50,12 @@ function Engineer() {
       INPROGRESS: 0,
       BLOCK: 0,
     };
-    debugger
 
     for (let i = 0; i < data.length; i++) {
       count[data[i].status]++;
     }
-    setTicketStatusCount((prev) => ({  ...count }));
+    setTicketStatusCount((prev) => ({ ...count }));
   };
-  console.log(ticketStatusCount);
 
   const getTic = async () => {
     try {
@@ -86,12 +86,18 @@ function Engineer() {
     }
   }, []);
 
-  function print(data) {
-    setOldDescription(data.description);
-    setOldTitle(data.title);
-    setOldPriority(data.ticketPriority);
-    setTicketId(data._id);
-    setShow(true);
+  function print(data, str) {
+    if (str == "edit") {
+      setOldDescription(data.description);
+      setOldTitle(data.title);
+      setOldPriority(data.ticketPriority);
+      setTicketId(data._id);
+      setShow(true);
+    } else if (str == "email") {
+      setShowEmail(true);
+      setTicketId(data._id);
+      setUserId(data.reporter);
+    }
   }
 
   return (
@@ -143,7 +149,16 @@ function Engineer() {
               ),
               tooltip: "Edit Ticket",
               onClick: (e, rowData) => {
-                print(rowData);
+                print(rowData, "edit");
+              },
+            },
+            {
+              icon: () => (
+                <img width={"20px"} className="text-center" src="/email.png" />
+              ),
+              tooltip: "Send An Email",
+              onClick: (e, rowData) => {
+                print(rowData, "email");
               },
             },
           ]}
@@ -152,17 +167,24 @@ function Engineer() {
       <hr />
       <h3 className="text-center text-danger">{errorMsg}</h3>
       <h4 className="text-center">Facing any issues? Raise a ticket!</h4>
-  
-        <UpdateTickets
-          show={show}
-          setShow={setShow}
-          oldDescription={oldDescription}
-          oldPriority={oldPriority}
-          oldTitle={oldTitle}
-          TicketId={ticketId}
-          addTicket={getTic}
+
+      <UpdateTickets
+        show={show}
+        setShow={setShow}
+        oldDescription={oldDescription}
+        oldPriority={oldPriority}
+        oldTitle={oldTitle}
+        TicketId={ticketId}
+        addTicket={getTic}
+      />
+      {showEmail && (
+        <SendEmail
+          show={showEmail}
+          setShow={setShowEmail}
+          userId={userId}
+          ticketId={ticketId}
         />
-      
+      )}
     </div>
   );
 }

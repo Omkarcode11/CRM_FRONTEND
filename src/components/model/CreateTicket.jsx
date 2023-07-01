@@ -11,7 +11,7 @@ export default function CreateTicket({addTicket}) {
   const handleShow = () => setShow(true);
 
   async function createTicketHandle() {
-    debugger;
+    
     let body = {
       title,
       description,
