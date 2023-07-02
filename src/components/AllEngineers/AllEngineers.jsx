@@ -17,9 +17,9 @@ function AllEngineers() {
     { title: "USERID", field: "userId" },
     { title: "EMAIL", field: "email" },
     { title: "STATUS", field: "userStatus" },
-    { title: "ASSIGNED", field: "ticketsAssigned" },
+    { title: "ASSIGNED", field: "ticketsAssigned"},
   ];
-
+  console.log(engineers)
   useEffect(() => {
     getAllUsers('ENGINEER')
       .then((res) => setEngineers(res))
