@@ -2,9 +2,17 @@ import MaterialTable from "@material-table/core";
 import React, { useEffect, useState } from "react";
 import getAllUsers from "../../api/getAllEngineers";
 import Card from "../card/Card";
+import UpdateEngineer from "../model/UpdateEngineer";
 
 function AllEngineers() {
+  let [show, setShow] = useState(false);
   let [engineers, setEngineers] = useState([]);
+  let [oldEngineerData, setOldEngineerData] = useState({
+    name: "",
+    email: " ",
+    engineerId: "",
+    status: "",
+  });
   let [count, setCount] = useState({ APPROVED: 0, PENDING: 0 });
   const columns = [
     {
@@ -20,11 +28,19 @@ function AllEngineers() {
     { title: "STATUS", field: "userStatus" },
     { title: "ASSIGNED", field: "ticketsAssigned" },
   ];
-  console.log(engineers);
+
+  async function getAllEngineersHandle() {
+    try {
+      
+      let data = await getAllUsers("ENGINEER");
+      setEngineers(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
-    getAllUsers("ENGINEER")
-      .then((res) => setEngineers(res))
-      .catch((res) => console.log(res));
+    getAllEngineersHandle();
   }, []);
 
   function countStatus(data) {
@@ -38,6 +54,21 @@ function AllEngineers() {
   useEffect(() => {
     if (engineers.length) countStatus(engineers);
   }, [engineers]);
+
+  function print(data, str) {
+    if (str == "edit") {
+      let obj = {
+        name: data.name,
+        email: data.email,
+        engineerId: data.userId,
+        status: data.userStatus,
+      };
+
+      setOldEngineerData((prev) => obj);
+
+      setShow(true);
+    }
+  }
 
   return (
     <div>
@@ -70,7 +101,7 @@ function AllEngineers() {
             icon: () => (
               <img width={"20px"} className="text-center" src="/edit.png" />
             ),
-            tooltip: "Edit Ticket",
+            tooltip: "Edit Engineer",
             onClick: (e, rowData) => {
               print(rowData, "edit");
             },
@@ -86,6 +117,18 @@ function AllEngineers() {
           },
         ]}
       />
+
+      {show && (
+        <UpdateEngineer
+          addEngineer = {getAllEngineersHandle}
+          engineerId={oldEngineerData.engineerId}
+          oldEmail={oldEngineerData.email}
+          oldName={oldEngineerData.name}
+          oldStatus={oldEngineerData.status}
+          setShow={setShow}
+          show={show}
+        />
+      )}
     </div>
   );
 }
