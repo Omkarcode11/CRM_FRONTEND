@@ -21,18 +21,18 @@ export default function TabP() {
     <TabContext value={value}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <TabList onChange={handleChange} aria-label="lab API tabs example">
-          <Tab aria-selected='true' label="ENGINEERS" value="1" />
-          <Tab label="USERS" value="2" />
-          <Tab label="TICKETS" value="3" />
+          <Tab aria-selected='true' label="ENGINEERS" value={1} />
+          <Tab label="USERS" value={2} />
+          <Tab label="TICKETS" value={3} />
         </TabList>
       </Box>
-      <TabPanel value="1">
+      <TabPanel value={1}>
        <AllEngineers/>
       </TabPanel>
-      <TabPanel value="2">
+      <TabPanel value={2}>
         <AllUsers/>
       </TabPanel>
-      <TabPanel value="3">
+      <TabPanel value={3}>
         <AllTickets/>
       </TabPanel>
     </TabContext>

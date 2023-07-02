@@ -3,7 +3,6 @@ import { URL } from "../constant/URL"
 
 async function getAllUsers(userType) {
     try {
-        debugger
         let config = {
             headers: {
                 'x-access-token': localStorage.getItem('CrmToken')
@@ -13,8 +12,6 @@ async function getAllUsers(userType) {
             }
 
         }
-
-        // let query = { userType: "ENGINEER" }
         let { data } = await axios.get(URL + '/crm/api/v1/user', config)
         return data
     } catch (err) {
