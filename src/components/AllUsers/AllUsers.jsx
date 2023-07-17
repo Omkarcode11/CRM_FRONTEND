@@ -59,7 +59,7 @@ function AllUsers() {
         name: data.name,
         email: data.email,
         status: data.status,
-        userId:data._id
+        userId:data.userId
       };
       setOldData((prev) => obj);
     }

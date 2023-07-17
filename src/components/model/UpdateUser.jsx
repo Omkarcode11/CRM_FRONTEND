@@ -21,7 +21,7 @@ export default function UpdateUser({
     if (name.length) body.name = name;
     if (email.length) body.email = email;
      body.userStatus = status?status:"APPROVED"
-    console.log(body);
+    // console.log(body);
     await updateEngineersApi(body, userId);
 
     addUser();
