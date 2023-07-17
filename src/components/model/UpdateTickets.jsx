@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import updateTicketApi from "../../api/updateTickets";
+import getAllUsers from "../../api/getAllEngineers";
 
 export default function UpdateTickets({
   addTicket,
@@ -8,6 +9,7 @@ export default function UpdateTickets({
   oldDescription,
   oldPriority,
   TicketId,
+  oldAssignee,
   show,
   setShow,
 }) {
@@ -15,12 +17,15 @@ export default function UpdateTickets({
   let [title, setTitle] = useState("");
   let [description, setDescription] = useState("");
   let [comment, setComment] = useState("");
+  let [newAssignee, setNewAssignee] = useState("");
   let [status, setStatus] = useState("");
+  let [engineers, setEngineers] = useState([]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   async function updateTicketHandle() {
-    let body;
+    debugger;
+    let body = {};
     if (localStorage.getItem("CrmUserType") == "CUSTOMER") {
       body = {
         title,
@@ -32,14 +37,19 @@ export default function UpdateTickets({
         status,
         comment,
       };
-    } else if (localStorage.getItem("CrmUserType") == "Admin") {
+    } else if (localStorage.getItem("CrmUserType") == "ADMIN") {
       body = {
         title,
         description,
         ticketPriority: priority,
         status,
         comment,
+        newAssignee: {
+          oldAssignee: oldAssignee,
+          newAssignee: newAssignee,
+        },
       };
+      console.log(body);
     }
 
     let data = await updateTicketApi(body, TicketId);
@@ -51,11 +61,30 @@ export default function UpdateTickets({
     handleClose();
   }
 
+  async function getAllEngineerHandler() {
+    try {
+      let data = await getAllUsers("ENGINEER");
+      let arr = [];
+      for (let i = 0; i < data.length; i++) {
+        arr.push(data[i].userId);
+      }
+      setEngineers(arr);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     setDescription(oldDescription);
     setTitle(oldTitle);
     setPriority(oldPriority);
   }, [show]);
+
+  useEffect(() => {
+    if (localStorage.getItem("CrmUserType") == "ADMIN") {
+      getAllEngineerHandler();
+    }
+  }, []);
 
   return (
     <>
@@ -110,16 +139,18 @@ export default function UpdateTickets({
           {localStorage.getItem("CrmUserType") === "ENGINEER" ||
           localStorage.getItem("CrmUserType") === "ADMIN" ? (
             <form>
-              <div className="d-flex justify-content-between ">
-                <label className="h4 pe-2 text-muted">Comment</label>
-                <input
-                  value={comment}
-                  className="p-2 h6 border rounded w-75"
-                  placeholder="Comment"
-                  onChange={(e) => setComment(e.target.value)}
-                  required
-                />
-              </div>
+              {localStorage.getItem("CrmUserType") == "ADMIN" && (
+                <div className="d-flex justify-content-between ">
+                  <label className="h4 pe-2 text-muted">Comment</label>
+                  <input
+                    value={comment}
+                    className="p-2 h6 border rounded w-75"
+                    placeholder="Comment"
+                    onChange={(e) => setComment(e.target.value)}
+                    required
+                  />
+                </div>
+              )}
               <div className="d-flex align-items-center justify-content-between ">
                 <label className="h4 pe-2 text-muted">STATUS</label>
                 <select
@@ -138,6 +169,25 @@ export default function UpdateTickets({
             </form>
           ) : (
             ""
+          )}
+
+          {localStorage.getItem("CrmUserType") == "ADMIN" && (
+            <form>
+              <div className="d-flex align-items-center justify-content-between ">
+                <label className="h4 pe-2 text-muted">Assignee</label>
+                <select
+                  className="form-control w-75"
+                  value={newAssignee}
+                  onChange={(e) => setNewAssignee(e.target.value)}
+                  placeholder="Change Assignee"
+                  required
+                >
+                  {engineers.map((data) => (
+                    <option value={data}>{data}</option>
+                  ))}
+                </select>
+              </div>
+            </form>
           )}
         </Modal.Body>
         <Modal.Footer>

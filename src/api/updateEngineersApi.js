@@ -2,7 +2,6 @@ import axios from 'axios'
 import { URL } from '../constant/URL'
 
 async function updateEngineersApi(body, userId) {
-    debugger
     try {
         let headers = {
             headers: {

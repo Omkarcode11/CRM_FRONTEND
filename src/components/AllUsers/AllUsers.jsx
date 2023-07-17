@@ -6,7 +6,7 @@ import UpdateUser from "../model/UpdateUser";
 
 function AllUsers() {
   let [customer, setCustomer] = useState([]);
-  let [count, setCount] = useState({ APPROVED: 0, PENDING: 0, TICKETS: 0 });
+  let [count, setCount] = useState({ APPROVED: 0, BLOCKED: 0, TICKETS: 0 });
   let [show, setShow] = useState(false);
   let [oldData, setOldData] = useState({ name: "", email: "", status: "",userId:'' });
 
@@ -26,7 +26,7 @@ function AllUsers() {
   ];
 
   function countStatus(data) {
-    let obj = { APPROVED: 0, PENDING: 0, TICKETS: 0 };
+    let obj = { APPROVED: 0, BLOCKED: 0, TICKETS: 0 };
     for (let i = 0; i < data.length; i++) {
       obj[data[i].userStatus]++;
       obj.TICKETS += data[i].ticketsCreated;
@@ -80,7 +80,7 @@ function AllUsers() {
           data={count.APPROVED}
           text={"light"}
         />
-        <Card color={"muted"} heading={"PENDING"} data={count.PENDING} />
+        <Card color={"danger"} text={'light'} heading={"BLOCKED"} data={count.BLOCKED} />
         <Card color={"warning"} heading={"TICKETS"} data={count.TICKETS} />
       </div>
       <MaterialTable

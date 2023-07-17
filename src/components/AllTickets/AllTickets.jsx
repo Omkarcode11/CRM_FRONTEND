@@ -13,6 +13,12 @@ function AllTickets() {
     INPROGRESS: 0,
     BLOCK: 0,
   });
+  let [oldTicket,setOldTicket] = useState({
+      oldTitle:"",
+      oldDescription:"",
+      oldPriority:"",
+      oldComment:""
+  })
 
   const columns = [
     {
@@ -63,6 +69,18 @@ function AllTickets() {
 
   function print(data, str) {
     if (str == "edit") {
+      // console.log(data)
+      setShow(true)
+      let obj = {
+        oldTitle:data.title,
+        oldDescription:data.description,
+        oldPriority:data.ticketPriority,
+        oldComment:data.comment,
+        ticketId :data._id,
+        oldAssignee:data.assignee
+    }
+    setOldTicket(obj)
+
     }
   }
 
@@ -124,15 +142,19 @@ function AllTickets() {
           },
         ]}
       />
+      {show &&
       <UpdateTickets
-        addTicket
-        oldTitle
-        oldDescription
-        oldPriority
-        TicketId
+      addTicket={gettingAllTickets}
+      oldTitle={oldTicket.oldTitle}
+      oldAssignee = {oldTicket.oldAssignee}
+      oldDescription={oldTicket.oldDescription}
+      oldPriority={oldTicket.oldPriority}
+      TicketId={oldTicket.ticketId}
+
         show={show}
         setShow={setShow}
       />
+    }
     </div>
   );
 }
