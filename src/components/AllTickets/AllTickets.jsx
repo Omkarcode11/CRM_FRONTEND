@@ -2,8 +2,10 @@ import MaterialTable from "@material-table/core";
 import React, { useEffect, useState } from "react";
 import { getTickets } from "../../api/getTickets";
 import Card from "../card/Card";
+import UpdateTickets from "../model/UpdateTickets";
 
 function AllTickets() {
+  let [show, setShow] = useState(false);
   let [tickets, setTickets] = useState([]);
   let [ticketStatusCount, setTicketStatusCount] = useState({
     OPEN: 0,
@@ -42,25 +44,60 @@ function AllTickets() {
     setTicketStatusCount((prev) => ({ prev, ...count }));
   };
 
+  async function gettingAllTickets() {
+    try {
+      let data = await getTickets();
+      setTickets(data);
+    } catch (err) {
+      console.log(err, "Error from while getting from tickets use as a admin");
+    }
+  }
+
   useEffect(() => {
-    getTickets()
-      .then((res) => setTickets(res))
-      .catch((res) => console.log(res));
+    gettingAllTickets()
   }, []);
 
-  useEffect(()=>{
-    if(tickets.length)countingStatus(tickets)
+  useEffect(() => {
+    if (tickets.length) countingStatus(tickets);
+  }, [tickets]);
 
-  },[tickets])
+  function print(data, str) {
+    if (str == "edit") {
+    }
+  }
 
   return (
     <div>
       <div className="d-flex justify-content-evenly">
-        <Card color={'primary'} heading={"TICKETS"} data={tickets.length} text={'light'} />
-        <Card color={'success'} heading={"OPEN"} data={ticketStatusCount.OPEN} text={'light'} />
-        <Card color={'secondary'} heading={"CLOSE"} data={ticketStatusCount.CLOSE} text={'light'} />
-        <Card color={'warning'} heading={"INPROGRESS"} data={ticketStatusCount.INPROGRESS}  />
-        <Card color={'danger'} heading={"BLOCKED"} data={ticketStatusCount.BLOCK} text={'light'} />
+        <Card
+          color={"primary"}
+          heading={"TICKETS"}
+          data={tickets.length}
+          text={"light"}
+        />
+        <Card
+          color={"success"}
+          heading={"OPEN"}
+          data={ticketStatusCount.OPEN}
+          text={"light"}
+        />
+        <Card
+          color={"secondary"}
+          heading={"CLOSE"}
+          data={ticketStatusCount.CLOSE}
+          text={"light"}
+        />
+        <Card
+          color={"warning"}
+          heading={"INPROGRESS"}
+          data={ticketStatusCount.INPROGRESS}
+        />
+        <Card
+          color={"danger"}
+          heading={"BLOCKED"}
+          data={ticketStatusCount.BLOCK}
+          text={"light"}
+        />
       </div>
       <MaterialTable
         title="All Tickets"
@@ -86,6 +123,15 @@ function AllTickets() {
             },
           },
         ]}
+      />
+      <UpdateTickets
+        addTicket
+        oldTitle
+        oldDescription
+        oldPriority
+        TicketId
+        show={show}
+        setShow={setShow}
       />
     </div>
   );
