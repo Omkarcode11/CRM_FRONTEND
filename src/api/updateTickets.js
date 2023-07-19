@@ -2,8 +2,6 @@ import axios from "axios"
 import { URL } from "../constant/URL"
 
 export default async function updateTicketApi(body, id) {
-    debugger
-
     let headers = {
         headers: {
             'x-access-token': localStorage.getItem('CrmToken')
