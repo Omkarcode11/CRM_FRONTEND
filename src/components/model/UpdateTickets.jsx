@@ -24,7 +24,6 @@ export default function UpdateTickets({
   const handleShow = () => setShow(true);
 
   async function updateTicketHandle() {
-    debugger;
     let body = {};
     if (localStorage.getItem("CrmUserType") == "CUSTOMER") {
       body = {
@@ -182,6 +181,7 @@ export default function UpdateTickets({
                   placeholder="Change Assignee"
                   required
                 >
+                   <option disabled value={''}>Select New Assignee</option>
                   {engineers.map((data) => (
                     <option value={data}>{data}</option>
                   ))}
