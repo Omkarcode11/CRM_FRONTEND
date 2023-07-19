@@ -65,6 +65,7 @@ export default function UpdateTickets({
       let data = await getAllUsers("ENGINEER");
       let arr = [];
       for (let i = 0; i < data.length; i++) {
+        if(data[i].userStatus=='APPROVED')
         arr.push(data[i].userId);
       }
       setEngineers(arr);
